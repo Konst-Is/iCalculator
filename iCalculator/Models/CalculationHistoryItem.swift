@@ -1,11 +1,9 @@
 import Foundation
 
-struct Calculation {
-    let expression: [CalculationHistoryItem]
-    let result: Double
+enum CalculationHistoryItem: Equatable {
+    case number(Double)
+    case operation(Operation)
 }
-
-extension Calculation: Codable {}
 
 extension CalculationHistoryItem: Codable {
     
@@ -41,23 +39,5 @@ extension CalculationHistoryItem: Codable {
             return
         }
         throw CalculationHistoryItemError.itemNotFound
-    }
-}
-
-class CalculationHistoryStorage {
-    
-    static let calculationHistoryKey = "calculationHistoryKey"
-    
-    func setHistory(calculation: [Calculation]) {
-        if let encoded = try? JSONEncoder().encode(calculation) {
-            UserDefaults.standard.setValue(encoded, forKey: CalculationHistoryStorage.calculationHistoryKey)
-        }
-    }
-    
-    func loadHistory() -> [Calculation] {
-        if let data = UserDefaults.standard.data(forKey: CalculationHistoryStorage.calculationHistoryKey) {
-            return (try? JSONDecoder().decode([Calculation].self, from: data)) ?? []
-        }
-        return []
     }
 }

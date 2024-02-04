@@ -16,6 +16,12 @@
 		B503638A2B6ECF4E008277A4 /* CalculationHistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363892B6ECF4E008277A4 /* CalculationHistoryStorage.swift */; };
 		B503638D2B6ED347008277A4 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503638B2B6ED347008277A4 /* HistoryTableViewCell.swift */; };
 		B503638E2B6ED347008277A4 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B503638C2B6ED347008277A4 /* HistoryTableViewCell.xib */; };
+		B50363902B70008E008277A4 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503638F2B70008E008277A4 /* Operation.swift */; };
+		B50363922B70023C008277A4 /* Calculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363912B70023C008277A4 /* Calculation.swift */; };
+		B50363942B700297008277A4 /* CalculationHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363932B700297008277A4 /* CalculationHistoryItem.swift */; };
+		B50363972B700330008277A4 /* UILabel+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363962B700330008277A4 /* UILabel+Animations.swift */; };
+		B50363992B70039E008277A4 /* UIButton+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363982B70039E008277A4 /* UIButton+Animations.swift */; };
+		B503639C2B7005DE008277A4 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503639B2B7005DE008277A4 /* Calculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,12 @@
 		B50363892B6ECF4E008277A4 /* CalculationHistoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationHistoryStorage.swift; sourceTree = "<group>"; };
 		B503638B2B6ED347008277A4 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		B503638C2B6ED347008277A4 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
+		B503638F2B70008E008277A4 /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		B50363912B70023C008277A4 /* Calculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculation.swift; sourceTree = "<group>"; };
+		B50363932B700297008277A4 /* CalculationHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationHistoryItem.swift; sourceTree = "<group>"; };
+		B50363962B700330008277A4 /* UILabel+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Animations.swift"; sourceTree = "<group>"; };
+		B50363982B70039E008277A4 /* UIButton+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animations.swift"; sourceTree = "<group>"; };
+		B503639B2B7005DE008277A4 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +74,13 @@
 		B50363722B6E98F3008277A4 /* iCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				B503639D2B700BDE008277A4 /* Services */,
+				B503639A2B700410008277A4 /* Extensions */,
+				B50363952B7002A9008277A4 /* Models */,
 				B50363732B6E98F3008277A4 /* AppDelegate.swift */,
 				B50363752B6E98F3008277A4 /* SceneDelegate.swift */,
 				B50363772B6E98F3008277A4 /* ViewController.swift */,
 				B50363792B6E98F3008277A4 /* Main.storyboard */,
-				B50363892B6ECF4E008277A4 /* CalculationHistoryStorage.swift */,
 				B503637C2B6E98F8008277A4 /* Assets.xcassets */,
 				B503637E2B6E98F8008277A4 /* LaunchScreen.storyboard */,
 				B50363812B6E98F8008277A4 /* Info.plist */,
@@ -74,6 +88,34 @@
 				B503638C2B6ED347008277A4 /* HistoryTableViewCell.xib */,
 			);
 			path = iCalculator;
+			sourceTree = "<group>";
+		};
+		B50363952B7002A9008277A4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B50363912B70023C008277A4 /* Calculation.swift */,
+				B503638F2B70008E008277A4 /* Operation.swift */,
+				B50363932B700297008277A4 /* CalculationHistoryItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B503639A2B700410008277A4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B50363962B700330008277A4 /* UILabel+Animations.swift */,
+				B50363982B70039E008277A4 /* UIButton+Animations.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B503639D2B700BDE008277A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B50363892B6ECF4E008277A4 /* CalculationHistoryStorage.swift */,
+				B503639B2B7005DE008277A4 /* Calculator.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,11 +190,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50363922B70023C008277A4 /* Calculation.swift in Sources */,
 				B503638A2B6ECF4E008277A4 /* CalculationHistoryStorage.swift in Sources */,
 				B50363782B6E98F3008277A4 /* ViewController.swift in Sources */,
+				B503639C2B7005DE008277A4 /* Calculator.swift in Sources */,
 				B50363742B6E98F3008277A4 /* AppDelegate.swift in Sources */,
+				B50363992B70039E008277A4 /* UIButton+Animations.swift in Sources */,
+				B50363972B700330008277A4 /* UILabel+Animations.swift in Sources */,
 				B50363762B6E98F3008277A4 /* SceneDelegate.swift in Sources */,
 				B503638D2B6ED347008277A4 /* HistoryTableViewCell.swift in Sources */,
+				B50363902B70008E008277A4 /* Operation.swift in Sources */,
+				B50363942B700297008277A4 /* CalculationHistoryItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
