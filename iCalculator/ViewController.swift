@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 final class ViewController: UIViewController {
     
@@ -42,9 +43,17 @@ final class ViewController: UIViewController {
     @IBAction private func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
         
-        sender.animateTap()
+        guard let text = label.text, text.last! != "%" else {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
+            return
+        }
         
-        guard let text = label.text, text.last! != "%" else { return }
+        if buttonText == "." && label.text?.components(separatedBy: ["+", "-", "x", "/"]).last?.contains(".") == true {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
+            return
+        }
+        
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         
         if let text = label.text, text.contains("Error") {
             label.text = "0"
@@ -52,42 +61,31 @@ final class ViewController: UIViewController {
         
         if let text = label.text, text == "0-" {
             label.text?.removeFirst()
-            //print(7)
         }
         
         if let text = label.text, let _ = Double(text), isCalculated {
             label.text = "0"
             isCalculated.toggle()
-            //print(1)
-        }
-        
-        if buttonText == "." && label.text?.components(separatedBy: ["+", "-", "x", "/"]).last?.contains(".") == true {
-            //print(2)
-            return
         }
         
         if buttonText == "." && label.text == "0" {
             label.text?.removeLast()
             label.text?.append("0.")
-            //print(3)
             return
         }
                 
         if buttonText == "." && "+-x/".contains(label.text?.last ?? " ") {
             label.text?.append("0.")
-            //print(4)
             return
         }
         
         if label.text == "0" {
             label.text = buttonText
-            //print(5)
             return
         }
         
         if label.text == "0." && buttonText != "." {
             label.text?.append(buttonText)
-            //print(6)
             return
         }
         
@@ -95,6 +93,7 @@ final class ViewController: UIViewController {
     }
     
     @IBAction private func clearButtonPressed() {
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         calculator.calculationHistory.removeAll()
         resetLabelText()
     }
@@ -102,6 +101,7 @@ final class ViewController: UIViewController {
     
     @IBAction private func deleteButtonPressed(_ sender: UIButton) {
         guard let text = label.text, text != "0" else { return }
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         label.text?.removeLast()
         
         if let text = label.text, text.isEmpty {
@@ -112,19 +112,22 @@ final class ViewController: UIViewController {
 // MARK: - calculateButtonPressed
     
     @IBAction private func calculateButtonPressed() {
-        
         guard let labelText = label.text?
                                    .components(separatedBy: ["+", "-", "x", "/"])
                                    .last?
                                    .replacingOccurrences(of: "%", with: " ")
                                    .trimmingCharacters(in: .whitespaces),
               let labelNumber = Double(labelText) else {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
             return
         }
         
         if let text = label.text, let _ = Double(text) {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
             return
         }
+        
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
 
         if label.text?.last! != "%" {
             calculator.calculationHistory.append(.number(labelNumber))
@@ -169,10 +172,14 @@ final class ViewController: UIViewController {
         
         guard let buttonOperation = Operation(rawValue: sender.tag)
         else { return }
+        
 
         guard let text = label.text else { return }
         
-        guard text.last! != "%" else { return }
+        guard text.last! != "%" else {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
+            return
+        }
         
         guard let labelText = text
             .components(separatedBy: ["+", "-", "x", "/"])
@@ -180,8 +187,11 @@ final class ViewController: UIViewController {
             .trimmingCharacters(in: .whitespaces),
               var labelNumber = Double(labelText)
         else {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
             return
         }
+        
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         
         labelNumber *= sign
         
@@ -193,13 +203,15 @@ final class ViewController: UIViewController {
             label.text?.removeLast(2)
         }
         
-        if let number = Double(labelText), number == 0 {
-            if labelText.count == 2 {
-                label.text?.removeLast(2)
-            } else {
-                label.text?.removeLast(labelText.count - 1)
-            }
-        }
+//        if let number = Double(labelText), number == 0 {
+//            if labelText.count == 2 {
+//                print(labelText)
+//                print(label.text!)
+//               // label.text?.removeLast(2)
+//            } else {
+//                //label.text?.removeLast(labelText.count - 1)
+//            }
+//        }
         calculator.calculationHistory.append(.number(labelNumber))
         calculator.calculationHistory.append(.operation(buttonOperation))
 
@@ -208,6 +220,7 @@ final class ViewController: UIViewController {
     
     @IBAction private func buttonMSPressed(_ sender: UIButton) {
         guard let text = label.text, let number = Double(text) else { return }
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         calculator.memory = number
         memoryLabel.text = text
     }
@@ -220,8 +233,13 @@ final class ViewController: UIViewController {
         }
         
         if !"+-x/".contains(text.last!) {
+            AudioServicesPlaySystemSound(Constants.errorSystemSoundId)
             return
-        } else if calculator.memory < 0 {
+        }
+        
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        
+        if calculator.memory < 0 {
             switch text.last! {
             case "+":
                 label.text?.removeLast()
@@ -262,11 +280,11 @@ final class ViewController: UIViewController {
             default: break
             }
         }
-        
         label.text?.append(formatNumber(number: calculator.memory))
     }
     
     @IBAction private func buttonMCPressed(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
         calculator.memory = 0
         memoryLabel.text = "0"
     }
