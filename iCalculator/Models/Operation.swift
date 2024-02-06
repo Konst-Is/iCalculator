@@ -1,5 +1,3 @@
-
-
 enum CalculationError: Error {
     case devidedByZero
     case valueTooLarge
@@ -27,7 +25,7 @@ enum Operation: Int {
         switch self {
         case .add:
             let result = number1 + number2
-            if result.isInfinite {
+            if abs(result) > Constants.maxNumber {
                 throw CalculationError.valueTooLarge
             }
             return result
@@ -36,13 +34,13 @@ enum Operation: Int {
             if result == 0 {
                 return 0
             }
-            if result.isZero {
+            if abs(result) < Constants.minNumber {
                 throw CalculationError.valueTooSmall
             }
             return result
         case .multiply:
             let result = number1 * number2
-            if result.isInfinite {
+            if abs(result) > Constants.maxNumber {
                 throw CalculationError.valueTooLarge
             }
             return result
@@ -54,12 +52,24 @@ enum Operation: Int {
                 return 0
             }
             let result = number1 / number2
-            if result.isZero {
+            if abs(result) < Constants.minNumber {
                 throw CalculationError.valueTooSmall
             }
             return result
-        case .percent: return 0 // Дописать!
+        default: return 0
         }
+    }
+    
+    func calculatePercent(number1: Double, operation: Operation, number2: Double) -> Double {
+        
+        switch operation {
+        case .multiply: return number1 * number2 / 100
+        case .divide: return number1 / number2 * 100
+        case .add: return number1 + number1 * number2 / 100
+        case .substract: return number1 - number1 * number2 / 100
+        default: return 0
+        }
+        
     }
 }
 

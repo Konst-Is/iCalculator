@@ -298,7 +298,7 @@
                                     <action selector="buttonMSPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LKc-M1-ghU"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="gOF-AQ-Mys">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="headTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="gOF-AQ-Mys">
                                 <rect key="frame" x="20" y="347" width="353" height="71.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <nil key="textColor"/>

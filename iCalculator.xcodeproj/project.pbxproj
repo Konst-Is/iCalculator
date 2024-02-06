@@ -22,6 +22,8 @@
 		B50363972B700330008277A4 /* UILabel+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363962B700330008277A4 /* UILabel+Animations.swift */; };
 		B50363992B70039E008277A4 /* UIButton+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363982B70039E008277A4 /* UIButton+Animations.swift */; };
 		B503639C2B7005DE008277A4 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503639B2B7005DE008277A4 /* Calculator.swift */; };
+		B503639F2B7104C3008277A4 /* String+ReplaceLastSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503639E2B7104C3008277A4 /* String+ReplaceLastSymbol.swift */; };
+		B50363A12B724067008277A4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50363A02B724067008277A4 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		B50363962B700330008277A4 /* UILabel+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Animations.swift"; sourceTree = "<group>"; };
 		B50363982B70039E008277A4 /* UIButton+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animations.swift"; sourceTree = "<group>"; };
 		B503639B2B7005DE008277A4 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
+		B503639E2B7104C3008277A4 /* String+ReplaceLastSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ReplaceLastSymbol.swift"; sourceTree = "<group>"; };
+		B50363A02B724067008277A4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 			children = (
 				B50363912B70023C008277A4 /* Calculation.swift */,
 				B503638F2B70008E008277A4 /* Operation.swift */,
+				B50363A02B724067008277A4 /* Constants.swift */,
 				B50363932B700297008277A4 /* CalculationHistoryItem.swift */,
 			);
 			path = Models;
@@ -105,6 +110,7 @@
 			children = (
 				B50363962B700330008277A4 /* UILabel+Animations.swift */,
 				B50363982B70039E008277A4 /* UIButton+Animations.swift */,
+				B503639E2B7104C3008277A4 /* String+ReplaceLastSymbol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -195,7 +201,9 @@
 				B50363782B6E98F3008277A4 /* ViewController.swift in Sources */,
 				B503639C2B7005DE008277A4 /* Calculator.swift in Sources */,
 				B50363742B6E98F3008277A4 /* AppDelegate.swift in Sources */,
+				B503639F2B7104C3008277A4 /* String+ReplaceLastSymbol.swift in Sources */,
 				B50363992B70039E008277A4 /* UIButton+Animations.swift in Sources */,
+				B50363A12B724067008277A4 /* Constants.swift in Sources */,
 				B50363972B700330008277A4 /* UILabel+Animations.swift in Sources */,
 				B50363762B6E98F3008277A4 /* SceneDelegate.swift in Sources */,
 				B503638D2B6ED347008277A4 /* HistoryTableViewCell.swift in Sources */,
