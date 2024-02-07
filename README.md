@@ -5,6 +5,6 @@
 
 
 
-<img src="https://github.com/Konst-Is/iCalculator/assets/125888284/954875ec-94b0-4d3c-baa8-b1ee0d00198f" width="500" />
+<img src="https://github.com/Konst-Is/iCalculator/assets/125888284/954875ec-94b0-4d3c-baa8-b1ee0d00198f" width="700" />
 
 The project is in development
