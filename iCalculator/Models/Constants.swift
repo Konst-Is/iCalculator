@@ -4,4 +4,5 @@ enum Constants {
     static let minimumNumberForFormatter = 1e-3
     static let tapSystemSoundId: UInt32 = 1104
     static let errorSystemSoundId: UInt32 = 1111
+    static let limitCalculationHistory = 100
 }

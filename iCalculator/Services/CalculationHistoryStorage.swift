@@ -3,7 +3,6 @@ import Foundation
 class CalculationHistoryStorage {
     
     static let calculationHistoryKey = "calculationHistoryKey"
-    static let limitCalculationHistory = 10 // Поставь нужное значение
     
     var calculations: [Calculation] = []
     
@@ -26,8 +25,8 @@ class CalculationHistoryStorage {
     }
     
     private func limitCalculationHistory() {
-        if calculations.count > CalculationHistoryStorage.limitCalculationHistory {
-            calculations.removeFirst(calculations.count - CalculationHistoryStorage.limitCalculationHistory)
+        if calculations.count > Constants.limitCalculationHistory {
+            calculations.removeFirst(calculations.count - Constants.limitCalculationHistory)
         }
     }
 }

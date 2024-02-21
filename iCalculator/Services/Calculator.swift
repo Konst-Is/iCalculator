@@ -10,7 +10,7 @@ final class CalculatorImpl: Calculator {
     
     var calculationHistory: [CalculationHistoryItem] = []
     
-    var memory: Double = 0 
+    var memory: Double = 0
     
     func calculate() throws -> Double {
         guard case .number(let firstNumber) = calculationHistory[0] else { return 0 }
@@ -24,25 +24,39 @@ final class CalculatorImpl: Calculator {
         if case .operation(let operation) = calculationHistory.last, operation == .percent {
             calculationHistoryWithoutPercent.removeLast()
             hasPercent = true
+            
             if case .number(let percentNumber) = calculationHistoryWithoutPercent.last {
                 calculationHistoryWithoutPercent.removeLast()
                 percentParameter = percentNumber
+                
                 if calculationHistoryWithoutPercent.isEmpty {
                     return operation.calculatePercent(number1: 1 ,operation: .multiply, number2: percentNumber)
                 }
+                
                 if case .operation(let operation) = calculationHistoryWithoutPercent.last {
                     calculationHistoryWithoutPercent.removeLast()
                     percentOperation = operation
+                    
                     if operation == .multiply || operation == .divide {
+                        
                         if case .number(let number) = calculationHistoryWithoutPercent.last {
                             calculationHistoryWithoutPercent.removeLast()
                             let currentResult = operation.calculatePercent(number1: number, operation: percentOperation, number2: percentParameter)
+                            
                             if calculationHistoryWithoutPercent.isEmpty {
                                 return currentResult
                             } else {
                                 calculationHistoryWithoutPercent.append(.number(currentResult))
                                 hasPercent = false
                             }
+                        }
+                    }
+                    
+                    if operation == .substract, calculationHistoryWithoutPercent.count == 1 {
+                        
+                        if case .number(let number) = calculationHistoryWithoutPercent.last, number == 0 {
+                            let result = operation.calculatePercent(number1: 1, operation: .multiply, number2: percentParameter)
+                            return result * -1
                         }
                     }
                 }

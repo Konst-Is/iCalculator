@@ -12,7 +12,7 @@ extension UIButton {
         opacityAnimation.keyTimes = [0, 0.2, 1]
         
         let animationGroup = CAAnimationGroup()
-        animationGroup.duration = 1.5
+        animationGroup.duration = 1.0
         animationGroup.animations = [scaleAnimation, opacityAnimation]
         layer.add(animationGroup, forKey: "groupAnimation")
     }

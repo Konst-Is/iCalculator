@@ -20,14 +20,22 @@ final class ViewController: UIViewController {
         return numberFormatter
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let radius = max(UIScreen.main.bounds.width, view.safeAreaLayoutGuide.layoutFrame.height / 2) / 5
         
         view.subviews.forEach {
             if type(of: $0) == UIButton.self {
-                $0.layer.cornerRadius = 40
+                $0.layer.cornerRadius = radius / 2
+                $0.layer.borderWidth = 1
+                $0.layer.borderColor = UIColor.systemBackground.cgColor
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         memoryLabel.text = "0"
         resetLabelText()
@@ -38,6 +46,7 @@ final class ViewController: UIViewController {
         let nib = UINib(nibName: "HistoryTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HistoryTableViewCell")
     }
+    
 // MARK: - buttonPressed
     
     @IBAction private func buttonPressed(_ sender: UIButton) {
@@ -54,6 +63,7 @@ final class ViewController: UIViewController {
         }
         
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         
         if let text = label.text, text.contains("Error") {
             label.text = "0"
@@ -61,6 +71,9 @@ final class ViewController: UIViewController {
         
         if let text = label.text, text == "0-" {
             label.text?.removeFirst()
+            if buttonText == "0" {
+                label.text?.removeFirst()
+            }
         }
         
         if let text = label.text, let _ = Double(text), isCalculated {
@@ -92,26 +105,38 @@ final class ViewController: UIViewController {
         label.text?.append(buttonText)
     }
     
-    @IBAction private func clearButtonPressed() {
+    
+    @IBAction private func clearButtonPressed(_ sender: UIButton) {
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         calculator.calculationHistory.removeAll()
         resetLabelText()
     }
-    
-    
+
     @IBAction private func deleteButtonPressed(_ sender: UIButton) {
         guard let text = label.text, text != "0" else { return }
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
+        if let symbol = label.text?.last,
+           "+-x/%".contains(symbol),
+           !calculator.calculationHistory.isEmpty {
+            if case .operation(_) = calculator.calculationHistory.last {
+                calculator.calculationHistory.removeLast(2)
+            }
+        }
+        
         label.text?.removeLast()
         
         if let text = label.text, text.isEmpty {
             label.text = "0"
         }
+        
     }
-    
+      
 // MARK: - calculateButtonPressed
     
-    @IBAction private func calculateButtonPressed() {
+    
+    @IBAction private func calculateButtonPressed(_ sender: UIButton) {
         guard let labelText = label.text?
                                    .components(separatedBy: ["+", "-", "x", "/"])
                                    .last?
@@ -128,6 +153,7 @@ final class ViewController: UIViewController {
         }
         
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
 
         if label.text?.last! != "%" {
             calculator.calculationHistory.append(.number(labelNumber))
@@ -141,21 +167,24 @@ final class ViewController: UIViewController {
             calculationHistoryStorage.calculations.append(newCalculation)
             calculationHistoryStorage.setHistory()
             isCalculated = true
-            
             label.text = formatNumber(number: result)
 
         } catch CalculationError.devidedByZero {
             label.text = "Error: division by 0"
             label.shake()
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         } catch CalculationError.valueTooLarge {
             label.text = "Error: value too large"
             label.shake()
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         } catch CalculationError.valueTooSmall {
             label.text = "Error: value too small"
             label.shake()
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         } catch let error {
             label.text = "Error: \(error.localizedDescription)"
             label.shake()
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         }
         
         calculator.calculationHistory.removeAll()
@@ -173,7 +202,6 @@ final class ViewController: UIViewController {
         guard let buttonOperation = Operation(rawValue: sender.tag)
         else { return }
         
-
         guard let text = label.text else { return }
         
         guard text.last! != "%" else {
@@ -192,6 +220,7 @@ final class ViewController: UIViewController {
         }
         
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         
         labelNumber *= sign
         
@@ -203,15 +232,6 @@ final class ViewController: UIViewController {
             label.text?.removeLast(2)
         }
         
-//        if let number = Double(labelText), number == 0 {
-//            if labelText.count == 2 {
-//                print(labelText)
-//                print(label.text!)
-//               // label.text?.removeLast(2)
-//            } else {
-//                //label.text?.removeLast(labelText.count - 1)
-//            }
-//        }
         calculator.calculationHistory.append(.number(labelNumber))
         calculator.calculationHistory.append(.operation(buttonOperation))
 
@@ -221,6 +241,7 @@ final class ViewController: UIViewController {
     @IBAction private func buttonMSPressed(_ sender: UIButton) {
         guard let text = label.text, let number = Double(text) else { return }
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         calculator.memory = number
         memoryLabel.text = text
     }
@@ -238,6 +259,7 @@ final class ViewController: UIViewController {
         }
         
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         
         if calculator.memory < 0 {
             switch text.last! {
@@ -285,6 +307,7 @@ final class ViewController: UIViewController {
     
     @IBAction private func buttonMCPressed(_ sender: UIButton) {
         AudioServicesPlaySystemSound(Constants.tapSystemSoundId)
+        sender.animateTap()
         calculator.memory = 0
         memoryLabel.text = "0"
     }
@@ -293,7 +316,6 @@ final class ViewController: UIViewController {
         label.text = "0"
     }
     
-    // Перенести в класс Сalculation, но для этого нужно создать класс Formatter, который форматирует число в строку
     private func expressionToString(_ expression: [CalculationHistoryItem]) -> String {
         var result = ""
         
@@ -349,12 +371,10 @@ final class ViewController: UIViewController {
                 str.append("0")
             }
         }
-
+        
         return str
     }
 }
-
-///////
 
 extension ViewController: UITableViewDelegate {}
 
